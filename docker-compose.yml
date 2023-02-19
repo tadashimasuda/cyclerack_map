@@ -4,8 +4,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     volumes:
       - ./:/usr/src/app
     tty: true
     ports:
       - "8000:8000"
+  db:
+    container_name: db 
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Tokyo
+    ports:
+      - "5432:5432"
+    volumes:  
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
